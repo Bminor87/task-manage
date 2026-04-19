@@ -30,7 +30,9 @@ jobs:
       - name: Build Backend
         run: npm run build:backend
       
-      - name: Run Tests
+      - name: Run Frontend Test
         run: npm run test:frontend
+        
+      - name: Run Backend Test
         run: npm run test:backend
 
