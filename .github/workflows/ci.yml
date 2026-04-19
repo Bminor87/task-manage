@@ -1,33 +1,33 @@
 name: Task Manage System Workflow
 run-name: ${{ github.actor }} is testing out GitHub Actions
 on: [push, pull_request]
-branches:
-  - main
-jobs:
-  build:
-    runs-on: ubuntu-latest
+  branches:
+    - main
+  jobs:
+    build:
+      runs-on: ubuntu-latest
 
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v6
+      steps:
+        - name: Check out repository code
+          uses: actions/checkout@v6
 
-      - name: Set up Node
-        uses: actions/setup-node@v6
-        with:
-          node-version: '24'
+        - name: Set up Node
+          uses: actions/setup-node@v6
+          with:
+            node-version: '24'
 
-      - name: Install dependencies
-        run: npm run install:all
+        - name: Install dependencies
+          run: npm run install:all
 
-      - name: Create .env files from examples
-        run: |
-          cp backend/.env.example backend/.env
-          cp frontend/.env.example frontend/.env
+        - name: Create .env files from examples
+          run: |
+            cp backend/.env.example backend/.env
+            cp frontend/.env.example frontend/.env
 
-      - name: Build Backend
-        run: npm run build:backend
-      
-      - name: Run Tests
-        run: npm run test:frontend
-        run: npm run test:backend
+        - name: Build Backend
+          run: npm run build:backend
+        
+        - name: Run Tests
+          run: npm run test:frontend
+          run: npm run test:backend
 
