@@ -32,7 +32,13 @@ jobs:
       
       - name: Run Frontend Test
         run: npm run test:frontend
-        
+
       - name: Run Backend Test
         run: npm run test:backend
+
+      - name: Run Frontend Lint
+        run: npm run lint:frontend
+
+      - name: Run Backend Lint
+        run: npm run lint:backend
 
