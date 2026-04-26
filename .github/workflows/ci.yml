@@ -47,7 +47,7 @@ jobs:
         run: docker compose down -v || true
 
       - name: Build Docker Containers
-        run: docker compose up --build --abort-on-container-exit
+        run: docker compose up -d
 
       - name: Wait for Docker
         run: sleep 15
