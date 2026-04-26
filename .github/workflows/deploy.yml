@@ -1,0 +1,51 @@
+name: Deploy Task Management App
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  Node-ci-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: npm run install:all
+
+      - name: Build Frontend
+        run: npm run build:frontend
+
+      - name: Build Backend
+        run: npm run build:backend
+      
+      - name: Run Frontend Test
+        run: npm run test:frontend
+
+      - name: Run Backend Test
+        run: npm run test:backend
+
+      - name: Run Frontend Lint
+        run: npm run lint:frontend
+
+      - name: Run Backend Lint
+        run: npm run lint:backend
+
+      # Deploy to Render
+      - name: Deploy to Render
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK" ]; then
+            echo "RENDER_DEPLOY_HOOK is not set."
+            exit 1
+          fi
+
+          curl "$RENDER_DEPLOY_HOOK"
