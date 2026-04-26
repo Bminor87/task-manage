@@ -42,3 +42,18 @@ jobs:
       - name: Run Backend Lint
         run: npm run lint:backend
 
+      - name: Test Dockerization
+        run: docker compose up --build --abort-on-container-exit
+
+      - name: Wait for Docker
+        run: sleep 15
+
+      - name: Check Backend Health
+        run: curl -f http://localhost:5000/api/health || { echo "Backend health check failed"; exit 1; }
+
+      - name: Check Frontend Health
+        run: curl -f http://localhost:3000 || { echo "Frontend health check failed"; exit 1; }
+
+      - name: Clean up Docker containers
+        run: docker compose down -v
+
