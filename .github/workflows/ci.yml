@@ -42,7 +42,11 @@ jobs:
       - name: Run Backend Lint
         run: npm run lint:backend
 
-      - name: Test Dockerization
+      # Test Dockerization
+      - name: Clean up docker volumes
+        run: docker volume prune -f
+
+      - name: Build Docker Containers
         run: docker compose up --build --abort-on-container-exit
 
       - name: Wait for Docker
