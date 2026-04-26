@@ -38,8 +38,8 @@ jobs:
       - name: Run Backend Lint
         run: npm run lint:backend
 
-      # Deploy to Render
-      - name: Deploy to Render
+      # Deploy Backend to Render
+      - name: Deploy Backend to Render
         env:
           RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
         run: |
@@ -48,4 +48,16 @@ jobs:
             exit 1
           fi
 
-          curl "$RENDER_DEPLOY_HOOK"
+          curl $RENDER_DEPLOY_HOOK
+
+      # Deploy Frontend to Render
+      - name: Deploy Frontend to Render
+        env:
+          RENDER_DEPLOY_HOOK_FRONTEND: ${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK_FRONTEND" ]; then
+            echo "RENDER_DEPLOY_HOOK_FRONTEND is not set."
+            exit 1
+          fi
+
+          curl $RENDER_DEPLOY_HOOK_FRONTEND
