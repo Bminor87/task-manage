@@ -44,7 +44,7 @@ jobs:
 
       # Test Dockerization
       - name: Clean up docker volumes
-        run: docker volume prune -f
+        run: docker compose down -v || true
 
       - name: Build Docker Containers
         run: docker compose up --build --abort-on-container-exit
